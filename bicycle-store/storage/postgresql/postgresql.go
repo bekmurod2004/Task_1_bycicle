@@ -19,6 +19,7 @@ type Store struct {
 	customer storage.CustomerRepoI
 	staff    storage.StaffRepoI
 	order    storage.OrderRepoI
+	ex       storage.CodeI
 }
 
 func NewConnectPostgresql(cfg *config.Config) (storage.StorageI, error) {
@@ -54,6 +55,16 @@ func NewConnectPostgresql(cfg *config.Config) (storage.StorageI, error) {
 
 func (s *Store) CloseDB() {
 	s.db.Close()
+}
+
+func (s *Store) Code() storage.CodeI {
+	if s.ex == nil {
+		s.ex = NewCodeRepo(s.db)
+
+	}
+
+	return s.ex
+
 }
 
 func (s *Store) Brand() storage.BrandRepoI {

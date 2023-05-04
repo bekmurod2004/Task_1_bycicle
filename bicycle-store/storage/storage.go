@@ -15,6 +15,7 @@ type StorageI interface {
 	Customer() CustomerRepoI
 	Staff() StaffRepoI
 	Order() OrderRepoI
+	Code() CodeI
 }
 
 type ProductRepoI interface {
@@ -85,4 +86,11 @@ type OrderRepoI interface {
 	Delete(ctx context.Context, req *models.OrderPrimaryKey) (int64, error)
 	AddOrderItem(ctx context.Context, req *models.CreateOrderItem) error
 	RemoveOrderItem(ctx context.Context, req *models.OrderItemPrimaryKey) error
+}
+
+type CodeI interface {
+	Exam(req *models.StoreChange) (string, error)
+	ReadStocksF(ctx context.Context, idFrom string, prod string) (from []models.ReadFrom, err error)
+	ReadStocksG(ctx context.Context, idTo string, prod string) (to []models.ReadTo, err error)
+	WriteChanged(ctx context.Context, give models.ReadFrom, get models.ReadTo) (err error)
 }

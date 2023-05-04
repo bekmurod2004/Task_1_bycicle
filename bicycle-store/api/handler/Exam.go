@@ -9,7 +9,7 @@ import (
 func (h *Handler) ChangeProdsCount(c *gin.Context) {
 	var upd models.StoreChange
 
-	err := c.ShouldBindJSON(&upd) // parse req body to given type struct
+	err := c.ShouldBindJSON(&upd)
 	if err != nil {
 		h.handlerResponse(c, "change store", http.StatusBadRequest, err.Error())
 		return
@@ -17,7 +17,7 @@ func (h *Handler) ChangeProdsCount(c *gin.Context) {
 
 	massage, err := h.storages.Code().Exam(&upd)
 	if err != nil {
-		h.handlerResponse(c, "storage.brand.create", http.StatusInternalServerError, err.Error())
+		h.handlerResponse(c, "_", http.StatusInternalServerError, err.Error())
 		return
 	}
 
